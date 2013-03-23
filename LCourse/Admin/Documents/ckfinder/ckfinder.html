@@ -1,0 +1,294 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>浏览服务器</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="ckfinder.js"></script>
+    <style type="text/css">
+        body, html, iframe, #ckfinder
+        {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="ckfinder">
+    </div>
+    <script type="text/javascript">
+        /**
+        *
+        *  URL encode / decode
+        *  http://www.webtoolkit.info/
+        *
+        **/
+
+        var myUrl = {
+            // private method for UTF-8 encoding
+            _utf8_encode: function (string) {
+                string = string.replace(/\r\n/g, "\n");
+                var utftext = "";
+                for (var n = 0; n < string.length; n++) {
+
+                    var c = string.charCodeAt(n);
+                    if (c < 128) {
+                        utftext += String.fromCharCode(c);
+                    }
+                    else if ((c > 127) && (c < 2048)) {
+                        utftext += String.fromCharCode((c >> 6) | 192);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    }
+                    else {
+                        utftext += String.fromCharCode((c >> 12) | 224);
+                        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    }
+
+                }
+
+                return utftext;
+            },
+
+            // private method for UTF-8 decoding
+            _utf8_decode: function (utftext) {
+                var string = "";
+                var i = 0;
+                var c = c1 = c2 = 0;
+
+                while (i < utftext.length) {
+
+                    c = utftext.charCodeAt(i);
+
+                    if (c < 128) {
+                        string += String.fromCharCode(c);
+                        i++;
+                    }
+                    else if ((c > 191) && (c < 224)) {
+                        c2 = utftext.charCodeAt(i + 1);
+                        string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                        i += 2;
+                    }
+                    else {
+                        c2 = utftext.charCodeAt(i + 1);
+                        c3 = utftext.charCodeAt(i + 2);
+                        string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                        i += 3;
+                    }
+
+                }
+
+                return string;
+            },
+            // public method for url encoding
+            encode: function (string) {
+                return escape(this._utf8_encode(string));
+            },
+
+            // public method for url decoding
+            decode: function (string) {
+                return this._utf8_decode(unescape(string));
+            }
+
+        };
+        
+    </script>
+    <script language="javascript" type="text/javascript">
+        (function () {
+            var config = {
+        };
+        var get = CKFinder.tools.getUrlParam;
+        var getBool = function (v) {
+            var t = get(v);
+
+            if (t === null)
+                return null;
+
+            return t == '0' ? false : true;
+        };
+
+        var tmp;
+        if (tmp = get('basePath'))
+            CKFINDER.basePath = tmp;
+
+        if (tmp = get('startupPath'))
+            config.startupPath = decodeURIComponent(tmp);
+
+        config.id = get('id') || '';
+
+        if ((tmp = getBool('rlf')) !== null)
+            config.rememberLastFolder = tmp;
+
+        if ((tmp = getBool('dts')) !== null)
+            config.disableThumbnailSelection = tmp;
+
+        if (tmp = get('data'))
+            config.selectActionData = tmp;
+
+        if (tmp = get('tdata'))
+            config.selectThumbnailActionData = tmp;
+
+        if (tmp = get('type'))
+            config.resourceType = tmp;
+
+        if (tmp = get('skin'))
+            config.skin = tmp;
+
+        if (tmp = get('langCode'))
+            config.language = tmp;
+
+        // Try to get desired "File Select" action from the URL.
+        var action;
+        if (tmp = get('CKEditor')) {
+            if (tmp.length)
+                action = 'ckeditor';
+        }
+        if (!action)
+            action = get('action');
+
+        var parentWindow = (window.parent == window)
+			? window.opener : window.parent;
+
+        switch (action) {
+            case 'js':
+                var actionFunction = get('func');
+                if (actionFunction && actionFunction.length > 0)
+                    config.selectActionFunction = parentWindow[actionFunction];
+
+                actionFunction = get('thumbFunc');
+                if (actionFunction && actionFunction.length > 0)
+                    config.selectThumbnailActionFunction = parentWindow[actionFunction];
+                break;
+
+            case 'ckeditor':
+                var funcNum = get('CKEditorFuncNum');
+                if (parentWindow['CKEDITOR']) {
+                    config.selectActionFunction = function (fileUrl, data) {
+                        parentWindow['CKEDITOR'].tools.callFunction(funcNum, fileUrl, data);
+                    };
+
+                    config.selectThumbnailActionFunction = config.selectActionFunction;
+                }
+                break;
+
+            default:
+                if (parentWindow && parentWindow['FCK'] && parentWindow['SetUrl']) {
+                    action = 'fckeditor';
+                    config.selectActionFunction = parentWindow['SetUrl'];
+
+                    if (!config.disableThumbnailSelection)
+                        config.selectThumbnailActionFunction = parentWindow['SetUrl'];
+                }
+                else
+                    action = null;
+        }
+
+        config.action = action;
+
+        // Always use 100% width and height when nested using this middle page.
+        config.width = config.height = '100%';
+
+
+
+        config.callback = function (api) {
+            api.addFileContextMenuOption({
+                label: '预览',
+                command: 'ViewFront'
+            }, function (api, file) {
+                window.open("/Private/Document.aspx?type=" + file.folder.type + "&path=" + file.getUrl().substring(11));
+            },
+	    function (file) {
+	        // Enable for html
+	        if (file.folder.type != "嵌入图片" && file.folder.type != "嵌入Flash" && file.folder.type != "媒体文件") {
+	            return true;
+	        }
+	        return false;
+	    }
+    );
+            api.addFileContextMenuOption({
+                label: '用HTML编辑器编辑',
+                command: 'EditHtml'
+            }, function (api, file) {
+                window.open("../Edit.aspx?path=" + file.getUrl(), "editHtml", "toolbars=no,resizable=no,top=0,left=0,width=1024,height=700");
+            },
+	    function (file) {
+	        // Enable for html
+	        if (file.ext == "html")
+	            return true;
+	        return false;
+	    }
+    );
+            api.addFileContextMenuOption({
+                label: '编辑媒体索引',
+                command: 'EditMedia'
+            }, function (api, file) {
+                window.open("../EditMedia.aspx?path=" + file.getUrl(), "editMedia", "toolbars=no,resizable=no,top=0,left=0,width=1024,height=300");
+            },
+	    function (file) {
+	        // Enable for html
+	        if (file.ext == "media")
+	            return true;
+	        return false;
+	    }
+    );
+            api.addFileContextMenuOption({
+                label: '添加统计项',
+                command: 'AddStatic'
+            }, function (api, file) {
+                CKFinder.ajax.load("../AddDocumentStatic.aspx?type=" + myUrl.encode(file.folder.type) + "&path=" + myUrl.encode(file.folder.getPath().substring(1) + file.name) + "&time=" + escape((new Date()).getTime()),
+                function (data) {
+                    api.openMsgDialog("提示", data);
+                });
+            },
+	    function (file) {
+
+	        return true;
+	    }
+    );
+            api.addFolderContextMenuOption(
+        {
+            label: '新建HTML页面',
+            command: 'NewHtml'
+        },
+        function (api, folder) {
+            api.openInputDialog("新建HTML页面", "新文件名: ", "新文件.html", function (value) {
+                api.openMsgDialog("提示", CKFinder.ajax.load('../NewHtmlPage.aspx?url=' + encodeURI("/Documents/" + folder.type + "/" + folder.getPath() + value) + "&time=" + escape((new Date()).toTimeString())));
+                api.refreshOpenedFolder();
+            });
+        }
+    ); 
+    api.addFolderContextMenuOption(
+        {
+            label: '添加统计项',
+            command: 'AddFolderStatic'
+        }, function (api, folder) {
+            CKFinder.ajax.load("../AddDocumentStatic.aspx?type=" + myUrl.encode(folder.type) + "&path=" + myUrl.encode(folder.getPath().substring(1)) + "&time=" + escape((new Date()).getTime()),
+                function (data) {
+                    api.openMsgDialog("提示", data);
+                });
+        }
+    );
+            api.disableFileContextMenuOption('viewFile', false);
+            api.disableFileContextMenuOption('downloadFile', false);
+            api.addFolderContextMenuOption(
+        {
+            label: '新建媒体索引',
+            command: 'NewMedia'
+        },
+        function (api, folder) {
+            api.openInputDialog("新建媒体索引", "新媒体索引名: ", "新媒体索引.media", function (value) {
+                api.openMsgDialog("提示", CKFinder.ajax.load('../NewMedia.aspx?url=' + encodeURI("/Documents/" + folder.type + "" + folder.getPath() + value) + "&time=" + escape((new Date()).toTimeString())));
+                api.refreshOpenedFolder();
+            });
+        }
+    );
+        };
+        var ckfinder = new CKFinder(config);
+        ckfinder.replace('ckfinder', config);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChatOnline.aspx.cs" Inherits="LCourse.Board.ChatOnline" %>

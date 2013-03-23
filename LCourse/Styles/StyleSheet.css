@@ -1,0 +1,189 @@
+﻿*
+{
+    padding:0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top:0;
+}
+a
+{
+    text-decoration:none;
+    font-weight:bold;
+}
+a img
+{
+    border:none;
+}
+a:hover
+{
+    text-decoration:underline;
+}
+body
+{
+    background-position: left top;
+    font-size: 0.8em;
+    background-image: url('20060329110355.png');
+    background-repeat: repeat-y;
+    background-color: #DCD8CE;
+}
+.floatleft
+{
+    float:left;
+}
+.floatright
+{
+    float:right;
+}
+.overflowhidden
+{
+    overflow:hidden;
+}
+.loginrequired
+{
+    vertical-align:middle;
+    margin:0;
+    padding:0;
+}
+#menu
+{
+    float:left;
+    width:200px;
+    padding-top:10px;
+}
+#main
+{
+    margin-left:220px;
+    padding-top:2px;
+    margin-right:10px;
+}
+#nav
+{
+    padding:12px 20px 0 20px;
+    *padding:10px 20px 0 20px;/*IE67*/
+    clear:both;
+    overflow:hidden;
+    height:23px;
+    *height:25px;/*IE67*/
+    *margin-top:-4px;/*IE67*/
+}
+.inlineblock
+{
+    display: -moz-inline-stack;  /* FF2 */
+    display: inline-block;
+    zoom: 1;         /* IE6 & 7 */
+    *display: inline;   /* IE6 & 7 */
+    _height: 250px;    /* IE6 */
+    margin-bottom:0px !important;margin-bottom:-100px;
+    position:relative;
+    z-index:1;
+}
+#nav ul.links
+{
+    position: relative;
+    display:block;
+    white-space:nowrap;
+    height: 18px;
+}
+#nav ul.links li
+{
+    border-width: 0px;
+    border-color: #FFFFFF;
+    display:inline;
+    position:relative;
+    list-style: none;
+    padding: 0 5px;
+    *padding:0 2px;
+    border-right-style: solid;
+    border-left-style: solid;
+}
+.hoverlight
+{
+    position:relative;
+    z-index:10;
+}
+#userpanel
+{
+    float:right;
+    padding:5px 4px 8px 8px;
+    margin-bottom:0px;
+}
+#userpanel a
+{
+    margin:0 2px;
+}
+#foot
+{
+    clear:both;
+    text-align:center;
+    font-size:0.8em;
+    color:#555;
+}
+#foot a
+{
+    color: #CCCCCC;
+}
+ul#icons {margin: 0; padding: 0;float:left;}
+ul#icons li {margin: 0 10px 0 0 ; position: relative; padding: 1px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 1px;}
+.button
+{
+    padding:1px;
+    cursor:pointer;
+}
+.ajaxUrl
+{
+}
+.menu
+{
+    padding:0px 1px 10px 1px;
+}
+.menu-header,.menu h2
+{
+    padding:3px 5px;
+}
+.menu-content
+{
+    padding:3px 0px;
+}
+.menuContentTight
+{
+    padding:0;
+}
+.more
+{
+    float:right;
+}
+.widget
+{
+    padding:10px 0 0 0;
+}
+.widget-header
+{
+    padding:7px 10px !important;
+    *padding:8px 10px 9px 10px !important;/*ie67*/
+    padding:6px 10px;
+}
+.widget-content
+{
+    padding:10px 15px;
+    padding-left:30px;
+    line-height:1.5;
+}
+table, table *
+{
+    padding:3px;
+}
+.iframeContent
+{
+    width:100% !important;width:98%;
+}
+.accordion h2,.accordion div
+{
+    padding:10px;
+    overflow:hidden;
+}
+.ui-accordion .ui-accordion-content
+{
+    overflow:hidden;
+}

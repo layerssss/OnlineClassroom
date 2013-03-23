@@ -1,0 +1,138 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Frame.master.cs" Inherits="LCourse.MasterPages.Frame" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link rel="SHORTCUT ICON" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="Bookmark" href="/favicon.ico" type="image/x-icon"/>
+    <link href="/Styles/theme/jquery-ui-1.8.6.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <%
+        if (false)
+        { %>
+    <script src="/Scripts/jquery-1.4.1-vsdoc.js" type="text/javascript"></script>
+    <style type="text/css">
+        #userpanel
+        {
+            margin-bottom:70px;
+        }
+    </style>
+    
+    <%
+        }
+        %>
+    <script src="/Scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+    <script src="/Scripts/swfobject.js" type="text/javascript"></script>
+    <script src="/jwplayer/jwplayer.js" type="text/javascript"></script>
+    <script src="/Scripts/JScript.js" type="text/javascript"></script>
+    <!--[if lt IE 7.]>
+    <script defer type="text/javascript" src="/Scripts/pngfix.js"></script>
+    <![endif]-->
+        <%
+        if (!Page.User.IsInRole("管理员"))
+        {
+            %>
+            <style type="text/css">
+        .admin
+        {
+            display:none;
+        }
+    </style>
+            <%
+        }
+                if (Page.User.Identity.IsAuthenticated)
+                {
+                    %>
+            <style type="text/css">
+        .loginrequired
+        {
+            display:none;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            setTimeout("ping();", 2000);
+        });
+        var lastmid=-1;
+        function ping() {
+            $.ajax({
+                "type": "GET",
+                "url": "/Ping.aspx?time=" + escape((new Date()).getTime()),
+                "dateType": "json",
+                "success": function (data) {
+                    if (data.id) {
+                        if (lastmid == data.id) {
+                            alert(data.showname + "给你发送了新消息，请及时查收\n如果没有显示新消息的窗口可能是因为弹出的窗口被浏览器拦截了\n请关闭浏览器对本站点的弹出窗口拦截，以查收和回复。");
+                        }
+                        lastmid = data.id;
+                        openMsgWin("/User/Msg.aspx?mid=" + data.id, 450,"msgwin");
+                        setTimeout("ping();", 5000);
+                    } else {
+                        setTimeout("ping();", 10000);
+                    }
+                }
+            });
+        }
+    </script>
+            <%
+                }
+        %>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="userpanel" class="ui-widget-header">
+        <asp:Literal ID="Label1" runat="server" ></asp:Literal>
+        <a href="/Admin" class="notNeat button admin">管理</a>
+        <a href="/Help.aspx" class="notNeat button">帮助</a>
+        <asp:LoginView ID="LoginView1" runat="server">
+            <AnonymousTemplate>
+                <a href="/Register.aspx" class="notNeat button">注册</a>
+                <asp:LinkButton ID="LinkButton2" CssClass="notNeat button" runat="server" onclick="LinkButton2_Click">登录</asp:LinkButton>
+            </AnonymousTemplate>
+            <LoggedInTemplate>
+                <a href="/User/Password.aspx" class="notNeat button">设置</a> 
+                <a href="/Courseworks/" class="notNeat button">作业</a>
+                <a href="/User/Mails.aspx" class="notNeat button">通知</a>
+                <a href="#" class="showonlinebutton button">在线</a>
+                <a href="#" class="openchat button notNeat">实时</a>
+                <a href="/Board/Favs.aspx" class="notNeat button">关注</a><asp:LinkButton ID="LinkButton3"
+                    runat="server" CssClass="notNeat button" onclick="LinkButton3_Click">注销</asp:LinkButton>
+            </LoggedInTemplate>
+        </asp:LoginView>
+    </div><a href="/"><img src="/Styles/logo.gif" class="notNeat" alt="<%=LCourse.Transactions.Setting_Title %>" /></a>
+    <div id="nav" class="ui-widget-header notNeat">
+        <ul class="links">
+            <li><a class="hoverlight" href="/">课程首页</a></li>
+            <li><a class="hoverlight" href="/Private/Document.aspx?type=<%=Server.UrlEncode("课程概况") %>">课程概况</a></li>
+            <li><a class="hoverlight" href="/Private/Document.aspx?type=<%=Server.UrlEncode("课程学习") %>">课程学习
+            <img src="/Styles/key.png" class="loginrequired" alt="" title="该页面需要登陆后才能访问" /></a></li>
+            <li><a class="hoverlight" href="/Private/Document.aspx?type=<%=Server.UrlEncode("其他资源") %>">其他资源
+            <img src="/Styles/key.png" class="loginrequired" alt="" title="该页面需要登陆后才能访问" /></a></li>
+            <li><a class="hoverlight" href="/Courseworks/">在线作业
+            <img src="/Styles/key.png" class="loginrequired" alt="" title="该页面需要登陆后才能访问" /></a></li>
+            <li><a class="hoverlight" href="/Test/">自我检测
+            <img src="/Styles/key.png" class="loginrequired" alt="" title="该页面需要登陆后才能访问" /></a></li>
+            <li><a class="hoverlight" href="/Board/">在线讨论
+            <img src="/Styles/key.png" class="loginrequired" alt="" title="该页面需要登陆后才能访问" /></a></li>
+        </ul>
+    </div>
+    <div id="menu" class="notNeat">
+        <asp:ContentPlaceHolder ID="MenuPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="main">
+        <asp:ContentPlaceHolder ID="MainPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="foot">
+        Copyright (C) 2010 暨南大学珠海校区网络中心&nbsp; 页面制作 <a href="http://www.layerssss.net/">尹志翔</a> &nbsp;&nbsp;    <asp:Literal
+            ID="Literal1" runat="server"></asp:Literal> </div>
+    </form>
+</body>
+</html>

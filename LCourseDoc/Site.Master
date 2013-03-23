@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="LCourseDoc.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>LCourse标记参考</title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    《操作系统原理》在线课程系统使用手册
+                </h1>
+            </div>
+            <div class="loginDisplay">
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" 
+                    EnableViewState="False" IncludeStyleBlock="False" Orientation="Horizontal" 
+                    meta:resourcekey="NavigationMenuResource1">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="主要特性" 
+                            meta:resourcekey="MenuItemResource1" Value="主要特性"/>
+                        <asp:MenuItem Text="服务器端部署" Value="服务器端部署" meta:resourcekey="MenuItemResource2" 
+                            NavigateUrl="~/ServerDeployment.aspx">
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="客户端部署" Value="客户端部署" meta:resourcekey="MenuItemResource3" 
+                            NavigateUrl="~/ClientDeployment.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="教师工作流" Value="教师工作流" meta:resourcekey="MenuItemResource4" 
+                            NavigateUrl="~/TeacherWorkflow.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="其它工作流" Value="其它工作流" meta:resourcekey="MenuItemResource5" 
+                            NavigateUrl="~/OtherWorkflow.aspx"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" 
+                            meta:resourcekey="MenuItemResource6"/>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                <p>
+                    &nbsp;</p>
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        layerssss.net (c) 2010</div>
+    </form>
+</body>
+</html>

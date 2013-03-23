@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True;User Instance=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.board" Member="board">
+    <Type Name="board">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="board_post" Member="post" ThisKey="id" OtherKey="board_id" Type="post" />
+    </Type>
+  </Table>
+  <Table Name="dbo.user_msg" Member="user_msg">
+    <Type Name="user_msg">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="from_user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="user_user_msg" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="user_user_msg1" Member="user1" ThisKey="from_user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chat_logon" Member="chat_logon">
+    <Type Name="chat_logon">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="lastaccesstime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="chat_logon_chat_msg" Member="chat_msg" ThisKey="id" OtherKey="logon_id" Type="chat_msg" />
+      <Association Name="user_chat_logon" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chat_msg" Member="chat_msg">
+    <Type Name="chat_msg">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="logon_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="chat_logon_chat_msg" Member="chat_logon" ThisKey="logon_id" OtherKey="id" Type="chat_logon" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.class" Member="class">
+    <Type Name="class">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="class_coursework" Member="coursework" ThisKey="id" OtherKey="class_id" Type="coursework" />
+      <Association Name="class_stdprof" Member="stdprof" ThisKey="id" OtherKey="class_id" Type="stdprof" />
+      <Association Name="class_user" Member="user" ThisKey="id" OtherKey="class_id" Type="user" />
+    </Type>
+  </Table>
+  <Table Name="dbo.coursework" Member="coursework">
+    <Type Name="coursework">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="uploadext" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="coursework_coursework_submission" Member="coursework_submission" ThisKey="id" OtherKey="coursework_id" Type="coursework_submission" />
+      <Association Name="class_coursework" Member="class" ThisKey="class_id" OtherKey="id" Type="class" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.coursework_submission" Member="coursework_submission">
+    <Type Name="coursework_submission">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="review" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="coursework_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="coursework_coursework_submission" Member="coursework" ThisKey="coursework_id" OtherKey="id" Type="coursework" IsForeignKey="true" />
+      <Association Name="user_coursework_submission" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.fav" Member="fav">
+    <Type Name="fav">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="post_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="post_fav" Member="post" ThisKey="post_id" OtherKey="id" Type="post" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="user_fav" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.module_article" Member="module_article">
+    <Type Name="module_article">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="show" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sort" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="module_article_module_deploy" Member="module_deploy" ThisKey="id" OtherKey="article_id" Type="module_deploy" />
+    </Type>
+  </Table>
+  <Table Name="dbo.module_deploy" Member="module_deploy">
+    <Type Name="module_deploy">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="article_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="location_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="module_article_module_deploy" Member="module_article" ThisKey="article_id" OtherKey="id" Type="module_article" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="module_location_module_deploy" Member="module_location" ThisKey="location_id" OtherKey="id" Type="module_location" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.module_location" Member="module_location">
+    <Type Name="module_location">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="path" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="module_location_module_deploy" Member="module_deploy" ThisKey="id" OtherKey="location_id" Type="module_deploy" />
+    </Type>
+  </Table>
+  <Table Name="dbo.module_spec" Member="module_spec">
+    <Type Name="module_spec">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ident" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.msg_error" Member="msg_error">
+    <Type Name="msg_error">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="rawurl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ip" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.msg_mails" Member="msg_mails">
+    <Type Name="msg_mails">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="subject" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="user_msg_mails" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.post" Member="post">
+    <Type Name="post">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="board_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="uid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="post_fav" Member="fav" ThisKey="id" OtherKey="post_id" Type="fav" />
+      <Association Name="post_reply" Member="reply" ThisKey="id" OtherKey="post_id" Type="reply" />
+      <Association Name="board_post" Member="board" ThisKey="board_id" OtherKey="id" Type="board" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="user_post" Member="user" ThisKey="uid" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.reply" Member="reply">
+    <Type Name="reply">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="post_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="uid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="post_reply" Member="post" ThisKey="post_id" OtherKey="id" Type="post" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="user_reply" Member="user" ThisKey="uid" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.statics_item" Member="statics_item">
+    <Type Name="statics_item">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="path" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="statics_item_statics_visit" Member="statics_visit" ThisKey="id" OtherKey="item_id" Type="statics_visit" />
+    </Type>
+  </Table>
+  <Table Name="dbo.statics_visit" Member="statics_visit">
+    <Type Name="statics_visit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="item_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="statics_item_statics_visit" Member="statics_item" ThisKey="item_id" OtherKey="id" Type="statics_item" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="user_statics_visit" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.stdprof" Member="stdprof">
+    <Type Name="stdprof">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="stdno" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="class_stdprof" Member="class" ThisKey="class_id" OtherKey="id" Type="class" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.test" Member="test">
+    <Type Name="test">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="test_test_sub" Member="test_sub" ThisKey="id" OtherKey="test_id" Type="test_sub" />
+    </Type>
+  </Table>
+  <Table Name="dbo.test_sub" Member="test_sub">
+    <Type Name="test_sub">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sort" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="test_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="options" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="test_test_sub" Member="test" ThisKey="test_id" OtherKey="id" Type="test" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[user]" Member="user">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="showname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="class_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="lastaccesstime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="onlinecount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="aspnetdb_uname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="stno" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="user_user_msg" Member="user_msg" ThisKey="id" OtherKey="user_id" Type="user_msg" />
+      <Association Name="user_user_msg1" Member="user_msg1" ThisKey="id" OtherKey="from_user_id" Type="user_msg" />
+      <Association Name="user_chat_logon" Member="chat_logon" ThisKey="id" OtherKey="user_id" Type="chat_logon" />
+      <Association Name="user_coursework_submission" Member="coursework_submission" ThisKey="id" OtherKey="user_id" Type="coursework_submission" />
+      <Association Name="user_fav" Member="fav" ThisKey="id" OtherKey="user_id" Type="fav" />
+      <Association Name="user_msg_mails" Member="msg_mails" ThisKey="id" OtherKey="user_id" Type="msg_mails" />
+      <Association Name="user_post" Member="post" ThisKey="id" OtherKey="uid" Type="post" />
+      <Association Name="user_reply" Member="reply" ThisKey="id" OtherKey="uid" Type="reply" />
+      <Association Name="user_statics_visit" Member="statics_visit" ThisKey="id" OtherKey="user_id" Type="statics_visit" />
+      <Association Name="class_user" Member="class" ThisKey="class_id" OtherKey="id" Type="class" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>

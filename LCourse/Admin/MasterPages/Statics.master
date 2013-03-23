@@ -1,0 +1,19 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Admin/MasterPages/Frame.Master" AutoEventWireup="true" CodeBehind="Statics.master.cs" Inherits="LCourse.Admin.MasterPages.Statics" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MenuPlaceHolder" runat="server">
+    <div class="menu"><h2 class="menu-header">
+            访问统计项目管理</h2>
+        
+        <div class="menu-content"><ul>
+            <li>
+            <a href="/Admin/Statics/Statics.aspx">访问统计项目管理</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>

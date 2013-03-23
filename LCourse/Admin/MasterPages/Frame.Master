@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Frame.master.cs" Inherits="LCourse.Admin.MasterPages.Frame" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>网络课程管理区</title>
+    <link href="/Styles/theme/jquery-ui-1.8.6.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <%
+        if (false)
+        { %>
+    <script src="/Scripts/jquery-1.4.1-vsdoc.js" type="text/javascript"></script>
+    <style type="text/css">
+        #userpanel
+        {
+            margin-bottom:70px;
+        }
+    </style>
+    <%} %>
+    <script src="/Scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+    <script src="/Scripts/JScript.js" type="text/javascript"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="userpanel" class="ui-widget-header">
+            <a href="/" class="button">回到首页</a>
+    </div><a href="/Admin" style="color:Black;font-size:xx-large;padding:30px;display:block;">网络课程管理区</a>
+    <div id="nav" class="ui-widget-header">
+        <ul class="links">
+            <li><a href="/Admin/Modules/">模块管理</a></li>
+            <li><a href="/Admin/Documents/">内容管理</a></li>
+            <li><a href="/Admin/Students/">学生管理</a></li>
+            <li><a href="/Admin/CourseWorks/">作业管理</a></li>
+            <li><a href="/Admin/Test/">在线测试管理</a></li>
+            <li><a href="/Admin/Messages/">消息日志</a></li>
+            <li><a href="/Admin/Statics/">访问统计项目管理</a></li>
+        </ul>
+    </div>
+    <div id="menu">    
+        <asp:ContentPlaceHolder ID="MenuPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="main">
+        <asp:ContentPlaceHolder ID="MainPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div id="foot">
+        Copyright (C) 2010 暨南大学珠海校区网络中心 </div>
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/MasterPages/Frame.Master" AutoEventWireup="true"
+    CodeBehind="User.master.cs" Inherits="LCourse.MasterPages.User" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MenuPlaceHolder" runat="server">
+    <div class="menu">
+        <h2 class="menu-header">
+            <asp:Literal ID="Literal1" runat="server"></asp:Literal></h2>
+        <div class="menu-content">
+            <ul>
+                <li><a href="/Login.aspx">登陆</a></li>
+                <li><a href="/Register.aspx">注册新用户</a></li>
+                <li><a href="/User/Password.aspx">个人设置</a></li>
+                <li><a href="/User/Mails.aspx">我的邮件记录</a></li>
+                <li><a href="/Help.aspx">帮助</a></li>
+            </ul>
+        </div>
+    </div>
+    <h5>
+        Membership Powered by </h5>
+        <p style="text-align:right">ASP.NET(R)</p>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="MainPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>

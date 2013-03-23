@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Admin/MasterPages/Frame.Master" AutoEventWireup="true" CodeBehind="Messages.master.cs" Inherits="LCourse.Admin.MasterPages.Messages" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MenuPlaceHolder" runat="server">
+    <div class="menu"><h2 class="menu-header">
+            消息日志</h2>
+        
+        <div class="menu-content"><ul>
+            <li>
+            <a href="/Admin/Messages/Errors.aspx">错误消息日志</a>
+            </li>
+            <li>
+            <a href="/Admin/Messages/Mails.aspx">邮件消息日志</a>
+            </li>
+            <li>
+            <a href="/Admin/Messages/SmtpLog.aspx">邮件发送队列与日志</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainPlaceHolder" runat="server">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+</asp:Content>

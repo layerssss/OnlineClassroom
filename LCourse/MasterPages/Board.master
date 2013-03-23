@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/MasterPages/Frame.Master" AutoEventWireup="true"
+    CodeBehind="Board.master.cs" Inherits="LCourse.MasterPages.Board" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MenuPlaceHolder" runat="server">
+    <div class="menu">
+        <h2 class="menu-header">
+            讨论区板块</h2>
+        <div class="menu-content">
+            <asp:ListView  ID="DataList1" runat="server" DataSourceID="LinqDataSource1">
+                <ItemTemplate>
+                    <li>
+                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("id", "/Board/Board.aspx?bid={0}") %>'
+                            Text='<%# Eval("title", "{0}") %>'></asp:HyperLink>
+                        <asp:HyperLink ID="HyperLink3" runat="server" CssClass="button admin" NavigateUrl='<%# Eval("id", "/Board/Manage/Struct/DelBoard.aspx?bid={0}") %>'
+                            Font-Size="XX-Small">Del</asp:HyperLink></li>
+                </ItemTemplate>
+                <LayoutTemplate>
+                <ul><li id="itemPlaceholder" runat="server"></li></ul>
+                </LayoutTemplate>
+            </asp:ListView>
+            <p style="margin-left: -20px;">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Board/Manage/Struct/AddBoard.aspx"
+                    CssClass="button admin" Font-Size="XX-Small">Add</asp:HyperLink></p>
+        </div>
+    </div>
+    <div class="menu">
+        <h2 class="menu-header">
+            特殊版块</h2>
+        <div class="menu-content">
+            <ul>
+                <li><a href="#" class="openchat">实时讨论区</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu">
+        <h2 class="menu-header">
+            我的</h2>
+        <div class="menu-content">
+            <ul>
+                <li><a href="/Board/Favs.aspx">关注的话题</a></li>
+                <li><asp:HyperLink ID="HyperLink4" runat="server">我的班级的同学</asp:HyperLink></li>
+                <li><a href="/Board/Classes.aspx">其他班级的同学</a></li>
+            </ul>
+        </div>
+    </div>
+    <asp:LinqDataSource ID="LinqDataSource1" runat="server" ContextTypeName="LCourse.DataClasses1DataContext"
+        EntityTypeName="" OrderBy="title" TableName="board">
+    </asp:LinqDataSource>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>

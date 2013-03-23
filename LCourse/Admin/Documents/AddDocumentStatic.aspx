@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddDocumentStatic.aspx.cs" Inherits="LCourse.Admin.Documents.AddDocumentStatic" %>

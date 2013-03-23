@@ -1,0 +1,15 @@
+
+.sifr-replaced {
+	visibility: visible !important;
+	height:2em;
+}
+
+span.sifr-alternate {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
